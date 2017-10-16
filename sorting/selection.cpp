@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
@@ -12,19 +11,27 @@ void output(T *a, int size)
 }
 
 template <class T>
-void bubblesort(T *a, int size)
+void selection(T *a, int size)
 {
-    for (int i = 0; i < size; i++)
-        for (int j = 0; j < size - i; j++)
-            if (a[j] > a[j + 1])
-                swap(a[j + 1], a[j]);
+    for (int i = 0; i < size - 1; i++)
+    {
+        int minPos = i;
+        for (int j = i + 1; j < size; j++)
+        {
+            if (a[j] < a[minPos])
+                minPos = j;
+        }
+
+        if (minPos != i)
+            swap(a[i], a[minPos]);
+    }
 }
 
 int main()
 {
     int a[] = {9, 8, 7, 6, 5, 4, 3, 2, 1};
     int len = sizeof(a) / sizeof(a[0]);
-    bubblesort<int>(a, len);
+    selection<int>(a, len);
     output<int>(a, len);
     return 0;
 }
