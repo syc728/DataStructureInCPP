@@ -89,7 +89,7 @@ long long maxSubSumN()
 
 int main()
 {
-    const int maxSize = 10;
+    const int maxSize = 100000;
     ifstream infile(to_string(maxSize)+".txt");
     sequence.reserve(maxSize);
     long long tmp;
