@@ -16,6 +16,9 @@ template<class T> class Chain
 		int Search(const T& x) const;
 		Chain<T>& Delete(int k, T& x);
 		Chain<T>& Insert(int k, const T& x);
+		Chain<T>& MakeCircle(int k);
+		bool DetectCircle1();
+		bool DetectCircle2();
 		void Output(ostream& out);
 	
 	private:
@@ -122,6 +125,8 @@ template<class T> Chain<T>& Chain<T>::Delete(int k, T& x)
 	//Save k'th element and free node p
 	x = p -> data;
 	delete p;
+
+	return *this;
 };
 
 /*######################################################
@@ -151,7 +156,34 @@ template<class T> Chain<T>& Chain<T>::Insert(int k, const T& x)
 		y -> link = first;
 		first = y;
 	}
+	return *this;
 };
+
+template<class T> Chain<T>& Chain<T>::MakeCircle(int k)
+{
+	if(k < 0 || k >= Length()) throw "OutOfBounds Exception";
+	ChainNode<T> *current = first, *insertPos = first;
+	for(current; current->link; current=current->link);
+	for(int i=0;i<k;i++)	insertPos = insertPos->link;
+
+	current->link = insertPos->link;
+
+	return *this;
+}
+
+template<class T> bool Chain<T>::DetectCircle1(ChainNode)
+{
+	ChainNode<T> *s = first, *f = first;
+	while(s && f && f->link)
+	{
+		s = s->link;
+		f= f->link->link;
+
+		if(s == f)
+			return true;
+	}
+	return false;
+}
 
 /*######################################################
 # Output
